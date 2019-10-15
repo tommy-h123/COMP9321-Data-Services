@@ -35,7 +35,7 @@ def read_from_sqlite(database_file, table_name):
 if __name__ == '__main__':
     table_name = "Demographic_Statistics"
     database_file = 'Demographic_Statistics.db'  # name of sqlite db file that will be created
-    csv_file = 'Demographic_Statistics_By_Zip_Code.csv'  # path to the downloaded csv file
+    csv_file = 'Week2_DataAccess/Demographic_Statistics_By_Zip_Code.csv'  # path to the downloaded csv file
     loaded_df = read_csv(csv_file)
 
     print("Creating database")
