@@ -8,6 +8,13 @@ def read_csv(csv_file):
     """
     return pd.read_csv(csv_file)
 
+def write_in_csv(dataframe, file):
+    """
+    :param dataframe: The dataframe which must be written into a csv file
+    :param file: where the csv must be stored
+    """
+    dataframe.to_csv(file, sep=',', encoding='utf-8')
+
 def print_dataframe(dataframe, print_column=True, print_rows=True):
     # print column names
     if print_column:
@@ -23,7 +30,11 @@ def question_1():
     print("--------------- question_1 ---------------")
     sum_df = read_csv("Olympics_dataset1.csv")
     win_df = read_csv("Olympics_dataset2.csv")
-    print_dataframe(sum_df)
+    df = pd.merge(sum_df, win_df, on='Team')
+    df.drop([0])
+    write_in_csv(df, 'test.csv')
+
+#    df = pd.merge(books_df, city_df, how='left', left_on=['Place_of_Publication'], right_on=['City'])
 
 
 def question_2():
