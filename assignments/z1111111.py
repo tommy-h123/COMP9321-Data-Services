@@ -44,9 +44,15 @@ def question_2(df):
     return df
 
 
-def question_3():
+def question_3(df):
     print("--------------- question_3 ---------------")
-    pass
+    #use dropna to remove all rows that have any NA values, by default removes rows and not columns
+    df.dropna(inplace=True)
+
+    #print last 10 rows with tail 
+    print(df.tail(10).to_string())
+
+    return df
 
 
 def question_4():
@@ -87,7 +93,7 @@ def question_10():
 if __name__ == "__main__":
     df = question_1()
     df = question_2(df)
-    question_3()
+    df = question_3(df)
     question_4()
     question_5()
     question_6()
