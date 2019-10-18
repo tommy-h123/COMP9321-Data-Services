@@ -29,12 +29,17 @@ def print_dataframe(dataframe, print_column=True, print_rows=True):
 def question_1():
     print("--------------- question_1 ---------------")
     sum_df = read_csv("Olympics_dataset1.csv")
-    win_df = read_csv("Olympics_dataset2.csv")
-    df = pd.merge(sum_df, win_df, on='Team')
-    df.drop([0])
-    write_in_csv(df, 'test.csv')
+    sum_df.drop(index=0, inplace=True)
+    sum_df.columns = ['Country', 'summer_rubbish', 'summer_participation', 'summer_gold',
+                        'summer_silver', 'summer_bronze', 'summer_total']
 
-#    df = pd.merge(books_df, city_df, how='left', left_on=['Place_of_Publication'], right_on=['City'])
+    win_df = read_csv("Olympics_dataset2.csv")
+    win_df.drop(index=0, inplace=True)
+    win_df.columns = ['Country', 'winter_participation', 'winter_gold', 'winter_silver',
+                        'winter_bronze', 'winter_total', 'A', 'B', 'C', 'D', 'E']
+    win_df.drop(columns=['A', 'B', 'C', 'D', 'E'], inplace=True)
+    df = pd.merge(sum_df, win_df, on='Country')
+    print(df.head(5))
 
 
 def question_2():
