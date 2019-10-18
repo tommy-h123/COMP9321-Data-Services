@@ -55,12 +55,19 @@ def question_3(df):
     return df
 
 
-def question_4():
+def question_4(df):
     print("--------------- question_4 ---------------")
-    pass
+    
+    df['summer_gold'] = df['summer_gold'].str.replace(',', '')
+
+    df['summer_gold'].astype(int, copy=False)
+    print(df['summer_gold'].argmax())
+    print(df.tail(10).to_string())
 
 
-def question_5():
+    # print(df.to_string())
+
+def question_5(df):
     print("--------------- question_5 ---------------")
     pass
 
@@ -94,8 +101,8 @@ if __name__ == "__main__":
     df = question_1()
     df = question_2(df)
     df = question_3(df)
-    question_4()
-    question_5()
+    question_4(df)
+    question_5(df)
     question_6()
     question_7()
     question_8()
