@@ -1,50 +1,47 @@
 import pandas as pd
 
-#Helper functions used to answer the questions neatly
-def read_csv(csv_file):
-    """
-    :param csv_file: the path of csv file
-    :return: A dataframe out of the csv file
-    """
-    return pd.read_csv(csv_file)
-
-def write_in_csv(dataframe, file):
-    """
-    :param dataframe: The dataframe which must be written into a csv file
-    :param file: where the csv must be stored
-    """
-    dataframe.to_csv(file, sep=',', encoding='utf-8')
-
-def print_dataframe(dataframe, print_column=True, print_rows=True):
-    # print column names
-    if print_column:
-        print(",".join([column for column in dataframe]))
-
-    # print rows one by one
-    if print_rows:
-        for index, row in dataframe.iterrows():
-            print(",".join([str(row[column]) for column in dataframe]))
 
 #Questions asked in the assignment brief
 def question_1():
     print("--------------- question_1 ---------------")
-    sum_df = read_csv("Olympics_dataset1.csv")
+    #read in both csv files
+    sum_df = pd.read_csv("Olympics_dataset1.csv")
+    win_df = pd.read_csv("Olympics_dataset2.csv")
+
+    #drop first row
     sum_df.drop(index=0, inplace=True)
-    sum_df.columns = ['Country', 'summer_rubbish', 'summer_participation', 'summer_gold',
-                        'summer_silver', 'summer_bronze', 'summer_total']
-
-    win_df = read_csv("Olympics_dataset2.csv")
     win_df.drop(index=0, inplace=True)
-    win_df.columns = ['Country', 'winter_participation', 'winter_gold', 'winter_silver',
-                        'winter_bronze', 'winter_total', 'A', 'B', 'C', 'D', 'E']
+
+    #rename columns, gave distinct names A-E for columns to be removed
+    sum_df.columns = ['Country', 'summer_rubbish', 'summer_participation', 'summer_gold', 'summer_silver', 'summer_bronze', 'summer_total']
+    win_df.columns = ['Country', 'winter_participation', 'winter_gold', 'winter_silver', 'winter_bronze', 'winter_total', 'A', 'B', 'C', 'D', 'E']
+    
+    #remove unwanted columns
     win_df.drop(columns=['A', 'B', 'C', 'D', 'E'], inplace=True)
+    
+    #merge dataframes on Country and print the first 5 rows
     df = pd.merge(sum_df, win_df, on='Country')
-    print(df.head(5))
+    print(df.head(5).to_string())
+
+    #return df for use in following questions
+    return df
 
 
-def question_2():
+def question_2(df):
     print("--------------- question_2 ---------------")
-    pass
+    #use regex to remove everything after the country name ie. the abreviation
+    df['Country'] = df['Country'].str.replace(' \(.*', '', regex=True)
+
+    #set the country column as the index, this deletes the old column but can be configured to leave County column as well as having the country names as index with drop=False
+    df.set_index('Country', inplace=True)
+
+    #drop columns that are unwanted
+    df.drop(columns=['summer_rubbish', 'summer_total', 'winter_total'], inplace=True)
+
+    #print first 5 rows
+    print(df.head(5).to_string())
+
+    return df
 
 
 def question_3():
@@ -88,8 +85,8 @@ def question_10():
 
 
 if __name__ == "__main__":
-    question_1()
-    question_2()
+    df = question_1()
+    df = question_2(df)
     question_3()
     question_4()
     question_5()
