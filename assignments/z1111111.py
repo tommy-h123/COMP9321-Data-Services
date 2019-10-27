@@ -61,8 +61,9 @@ def question_4(df):
     df['summer_gold'] = df['summer_gold'].str.replace(',', '')
 
     df['summer_gold'].astype(int, copy=False)
-    print(df['summer_gold'].argmax())
-    print(df.tail(10).to_string())
+    print(df['summer_gold'].to_string())
+    # print(df['summer_gold'].argmax())
+    # print(df.to_string())
 
 
     # print(df.to_string())
